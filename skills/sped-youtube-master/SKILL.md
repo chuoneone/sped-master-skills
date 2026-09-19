@@ -224,16 +224,15 @@ description: >-
 function printDocument() {
   try {
     let htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-    const autoPrintSnippet = `
-      <script>
-        window.addEventListener('load', function() {
-          setTimeout(function() {
-            window.focus();
-            window.print();
-          }, 350);
-        });
-      <\/script>
-    `;
+    // 使用字串拆解，嚴禁直寫 script 標籤，徹底防止瀏覽器 HTML 解析器提早截斷出錯
+    const autoPrintSnippet = '<scr' + 'ipt>\n' +
+      'window.addEventListener("load", function() {\n' +
+      '  setTimeout(function() {\n' +
+      '    window.focus();\n' +
+      '    window.print();\n' +
+      '  }, 350);\n' +
+      '});\n' +
+      '</scr' + 'ipt>\n';
     htmlContent = htmlContent.replace('</body>', autoPrintSnippet + '</body>');
     const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
     const blobUrl = URL.createObjectURL(blob);
