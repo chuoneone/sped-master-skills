@@ -1,7 +1,7 @@
 ---
 name: self-made-ebook
 description: >-
-  國中教材庫 / 步步講堂 / e指書 / 自製電子書（雙模式教學互動講義／隨堂小考／YouTube 影音多模態電子書產生器）。專門將教師提供的任何學科備課資料或教學教材（國文、英文、數學、自然、社會、特教、YouTube 影片/字幕等），轉換為單一獨立的「國中教材庫」雙模式互動 HTML 檔案。該教材同時具備兩大核心功能：1.「學生端純淨 A4 列印」（另開 Blob 獨立分頁自動彈出列印，避開沙箱阻擋，直接還原為無解答、無操作干擾文字的標準白紙作業/評量卷）；2.「教師端大屏／投影教學」（右上角膠囊工具列、逐題獨立點擊顯答、一鍵揭曉全書答案、多色粗細螢光筆/板書筆圈記劃線、全螢幕放大縮小）。當使用者提到「國中教材庫」、「步步講堂」、「e指書」、「自製電子書」、「製作電子書」、「電子教材」、「雙模式互動html」、「互動學習單」、「YouTube轉電子書」、「影片轉學習單」或提供備課教材/影片時，皆啟動此 skill。
+  國中教材庫 / 步步講堂 / e指書 / 自製電子書（雙模式教學互動講義／隨堂小考／YouTube 影音多模態電子書產生器）。專門將教師提供的任何學科備課資料或教學教材（國文、英文、數學、自然、社會、特教、YouTube 影片/字幕等），轉換為單一獨立的「國中教材庫」雙模式互動 HTML 檔案。該教材同時具備兩大核心功能：1.「學生端純淨 A4 列印」（直接呼叫 window.print() 原生列印，免另開分頁，直接還原為無解答、無操作干擾文字的標準白紙作業/評量卷）；2.「教師端大屏／投影教學」（右上角膠囊工具列、逐題獨立點擊顯答、一鍵揭曉全書答案、多色粗細螢光筆/板書筆圈記劃線、全螢幕放大縮小）。當使用者提到「國中教材庫」、「步步講堂」、「e指書」、「自製電子書」、「製作電子書」、「電子教材」、「雙模式互動html」、「互動學習單」、「YouTube轉電子書」、「影片轉學習單」或提供備課教材/影片時，皆啟動此 skill。
 ---
 
 # 國中教材庫 (Junior High Teaching Library / 步步講堂) — 雙模式教學互動講義產生器
@@ -122,9 +122,13 @@ description: >-
        throwOnError: false
      });
      ```
-  5. 列印樣式相容：確保 `.katex` 在 `@media print` 下能夠完整、清晰呈現，不被任何隱藏規則影響。
+### 5-2. 國中英語單字隨堂學習單（每節嚴格 4 頁標準 A4 模版規範）
+- **核心鐵則**：凡製作英語科單字隨堂學習單（`english-*u*-vocab-*.html`），**一律強制使用 4 頁標準獨立架構**（1 頁專注 1 焦點，題目充裕、大字級 14pt+、題目絕不跨頁）：
+  - **P.1 看圖認讀 ＋ 四線格手寫抄寫**：雙欄大字卡（14.5pt 粗體英文＋13pt 中文）、62px 圖片、3 次跟讀打勾方框、標準四線三格手寫線＋點擊顯答案紅字抄寫範本。
+  - **P.2 聽音連連看 ＋ 圖片配對大挑戰**：左右對照（左欄 🔊 聽音題號與 `( [A] )` 填答括號；右欄 A~H 圖片詞彙對照選單庫）。
+  - **P.3 補字母微拼字特訓（Missing Letters）**：頂部 Word Bank 單字晶片庫、雙欄 54px 圖解拼寫卡挖空字母槽＋點擊顯紅字。
+  - **P.4 生活實用語境例句選擇與認證**：7~8 題生活情境對話圈選題、底部 ⭐⭐⭐⭐⭐ 完課星等認證與教師簽章盒。
 
-### 6. 紅色解答與手寫答案精簡原則（特教／國中課堂友善規範，嚴防學生抄寫過久）
 - **核心痛點**：在課堂大屏/投影教學中，教師一鍵揭曉紅字答案時，學生必須對照螢幕手寫抄入紙本學習單或講義中。若紅色答案為落落長的完整句子（如 20～30 字），學生會耗費數倍時間埋頭抄寫，導致課堂節奏嚴重拖慢、學生手部肌肉疲倦並喪失注意力。
 - **極簡字數規範**：
   1. **表格填空／大意對照表**：每個儲存格內的紅色答案**嚴格精簡在 8～12 字以內**（以核心關鍵詞短語呈現，例如：`幼年失明，黑暗中摸索`、`掌心向下，能付出的手最美`）。
@@ -134,6 +138,63 @@ description: >-
      - 數值題目直接填入純數字與正負號（如 `－12`、`19`、`8.5, －8.5`、`＋500`）。
      - 觀念判定或是非題，一律提供 `(A)`、`(B)`、`(C)` 選項，答案僅揭曉英文字母代號（如 `(A)`）。
      - **理由**：特教與資源班學生手部小肌肉耐力有限、抄寫極易疲乏分心。去除國字贅詞後，學生能在 3 秒內精準完成抄寫，緊跟課堂節奏。
+
+### 6-1. 逐題／逐格獨立點擊顯答鐵律（Granular Blank-by-Blank / Item-by-Item Reveal，嚴禁整大題一次全出）
+- **核心教學痛點**：若將整大題（如 5 個步驟流程圖、3 列比較表格、整段 4 句填空）包在同一個父層點擊事件中，點一下整大題答案全部暴衝出來，會嚴重破壞課堂提問節奏、剝奪學生思考機會，造成抄寫混亂。
+- **逐格／逐題精準顯答原則**：
+  1. **每一格填空（`.write-blank` / `.ans-slot`）**：點擊該空格只顯開該格答案，不影響相鄰的其他空格。
+  2. **每一個是非題括號（`.bracket-slot`）**：點擊該題括號只顯開該題的 `⭕` 或 `✕`。
+  3. **每一個選擇題（`.qa-block`）**：點擊該題只顯開該題括號答案與正確選項紅框（`.qa-opt.correct`）。
+  4. **比較表格（`.custom-table tbody tr` 或 `td`）**：點擊該列只顯開該列答案，或點擊特定儲存格只顯開該格。
+  5. **流程圖（`.flow-step`）**：點擊第 1 步只顯開第 1 步，點擊第 2 步只顯開第 2 步。
+  6. **關鍵字標記（`.hl-word`）**：點擊特定語詞才單獨亮起該詞之螢光黃底色。
+- **標準 CSS 樣式支援**：
+  ```css
+  /* 支援全域一鍵全顯，亦支援最小單位逐格/逐題單獨顯答 */
+  .show-ans .ans-reveal,
+  .write-blank.show-one .ans-reveal,
+  .flow-step.show-one .ans-reveal,
+  tr.show-one .ans-reveal,
+  .qa-block.show-one .ans-reveal,
+  .interactive-item.show-one .ans-reveal {
+    color: #dc2626 !important;
+    user-select: text;
+  }
+  .show-ans .bracket-ans,
+  .bracket-slot.show-one .bracket-ans,
+  .interactive-item.show-one .bracket-ans {
+    color: #dc2626 !important;
+  }
+  .show-ans .hl-word,
+  .hl-word.show-one {
+    background-color: #fef08a !important;
+    color: #854d0e !important;
+    box-shadow: 0 0 0 1.5px #eab308;
+  }
+  ```
+- **標準 JavaScript 事件委託架構**：
+  ```javascript
+  document.addEventListener("DOMContentLoaded", () => {
+    initDrawingCanvases();
+    
+    // 點擊事件委託：逐格 / 逐題精準顯答（未開畫筆時生效）
+    document.addEventListener("click", (e) => {
+      if (isPenMode) return;
+      if (e.target.closest('.classroom-toolbar') || e.target.closest('.no-print') || e.target.closest('button')) return;
+      
+      const targetElement = e.target.closest('.write-blank, .bracket-slot, .hl-word, .flow-step, .qa-block, tr, .interactive-item');
+      if (targetElement) {
+        targetElement.classList.toggle('show-one');
+      }
+    });
+  });
+
+  function toggleItemAnswer(el, e) {
+    if (isPenMode) return;
+    if (e) e.stopPropagation();
+    el.classList.toggle("show-one");
+  }
+  ```
 
 ### 7. 小考測驗卷模式（Quiz Mode：5 題單選＋5 題填充標準雙頁）
 - 當教師要求製作「小考」、「隨堂測驗卷」、「小測驗」時，自動啟用標準 2 頁 A4 測驗卷架構：
@@ -303,8 +364,8 @@ description: >-
   
   <div class="toolbar-divider"></div>
   
-  <!-- 6. 純淨列印（以 Blob 另開新分頁並自動彈出列印視窗，防沙箱阻擋） -->
-  <button class="tool-btn" onclick="printDocument()" title="另開純淨分頁並自動列印">
+  <!-- 6. 純淨列印（直接原生列印，免另開分頁） -->
+  <button class="tool-btn" onclick="printDocument()" title="直接列印純淨 A4 學生卷">
     🖨️
   </button>
 
@@ -342,6 +403,26 @@ description: >-
 ## 樣式與列印關鍵 CSS 規則
 
 ```css
+/* 課堂懸浮膠囊工具列（鐵律：一律固定於右上角 top: 16px; right: 20px; 嚴禁置於螢幕中間 top: 50% 遮擋題目） */
+.classroom-toolbar {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 8px 6px;
+  border-radius: 36px;
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Noto Sans TC", sans-serif;
+}
+
 /* 預設隱藏解答（投影教學模式） */
 .correct-choice {
   display: inline-block;
@@ -508,7 +589,7 @@ body.pen-mode .drawing-canvas {
 4. `setPenColor(color, el)` 與 `setPenSize(size, el)`：切換 4 色與 3 種筆徑。
 5. `initCanvases()`：監聽滑鼠 `mousedown`、`mousemove`、`mouseup`，利用 `ctx.lineTo()` 繪製平滑圓角線條。
 6. `clearAllDrawings()`：一鍵清除所有畫布畫跡。
-7. `printDocument()`：以 Blob URL 另開獨立純淨新分頁，並在 HTML 內尾端自動注入 `<script>window.addEventListener('load', () => setTimeout(() => window.print(), 350));</script>`，徹底解決 Webview/Canvas 沙箱阻擋列印問題，實現點擊即自動彈出系統列印視窗。
+7. `printDocument()`：直接呼叫 `window.print()`，配合 `@media print` 自動隱藏工具列、解答與畫布，輸出 100% 滿版 A4 純淨學生作業卷。
 8. `speakText(text)`：調用 Web Speech API（`window.speechSynthesis`）朗讀指定文字或題目，語速 0.85，輔助閱讀障礙學生。
 9. SVG 連線座標即時計算：監聽 `window.load` 與 `window.resize`，依據卡片與目標盒的 `getBoundingClientRect()` 更新 `x1, y1, x2, y2`。
 
@@ -599,7 +680,7 @@ body.pen-mode .drawing-canvas {
 當使用者傳入備課檔案（Word、PDF、圖片、文字或 YouTube 影片）：
 1. **確認教材類型與學生特質**：若是文言文／古文／詩詞，套用「8 頁獨立圖文精讀規範」；若是數學則套用「漸進式純算式規範」；若是 YouTube 影片則套用「4 頁 B-D-A 影音多模態規範」。
 2. **分析教材規劃關卡**：提煉核心知識點、單字/定義、基礎練習、變化句型與評量。
-3. **建構 HTML**：直接套用標準骨架，置入題目、解答標記（`.correct-choice`、`.ans-slot`）、SVG 連連看與右上角懸浮藥丸工具列（支援 Blob 另開自動彈出列印）。
+3. **建構 HTML**：直接套用標準骨架，置入題目、解答標記（`.correct-choice`、`.ans-slot`）、SVG 連連看與右上角懸浮藥丸工具列（支援直接原生列印）。
 4. **檢查列印與提示文字**：再次確認**絕無** `（點題目秀答案）` 等操作指示文字，確保 `@media print` 能夠完美輸出學生無答案版。
 
 
